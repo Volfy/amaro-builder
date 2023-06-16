@@ -3,7 +3,8 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { env } from "~/env.mjs";
 
-import neo4j, { Node, Relationship, Integer } from 'neo4j-driver';
+import neo4j from 'neo4j-driver'
+import type { Node, Relationship, Integer } from 'neo4j-driver';
 
 export const exampleRouter = createTRPCRouter({
   hello: publicProcedure
@@ -15,7 +16,7 @@ export const exampleRouter = createTRPCRouter({
     }),
   testing: publicProcedure
     .input(z.object({ text: z.string() }))
-    .query(async ({ input }) => {
+    .query(async () => {
       const driver = neo4j.driver(env.NEO4J_URI, neo4j.auth.basic(env.NEO4J_USERNAME, env.NEO4J_PASSWORD))
       const session = driver.session()
 
