@@ -6,6 +6,9 @@ import { z } from "zod";
  */
 const server = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]),
+  NEO4J_URI: z.string(),
+  NEO4J_USERNAME: z.string(),
+  NEO4J_PASSWORD: z.string(),
 });
 
 /**
@@ -24,6 +27,9 @@ const client = z.object({
  */
 const processEnv = {
   NODE_ENV: process.env.NODE_ENV,
+  NEO4J_URI: process.env.NEO4J_URI,
+  NEO4J_USERNAME: process.env.NEO4J_USERNAME,
+  NEO4J_PASSWORD: process.env.NEO4J_PASSWORD
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
 };
 
