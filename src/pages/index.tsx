@@ -1,11 +1,13 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import { SignInButton, SignOutButton } from "@clerk/nextjs";
+import { UserButton, useUser } from "@clerk/nextjs";
 
 import { api } from "~/utils/api";
 
 const Home: NextPage = () => {
   const testing = api.example.testing.useQuery({ text: 'owowow' })
+
+  const user = useUser()
 
   return (
     <>
@@ -16,14 +18,13 @@ const Home: NextPage = () => {
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
-          <SignOutButton>
-            <button className="btn">
-              Sign Out
-            </button>
-          </SignOutButton>
+          <div>
+          <UserButton afterSignOutUrl="/"/>
+          </div>
           <p className="text-2xl text-white">
             {testing.data ? testing.data.result : 'lwlwowowl'}
           </p>
+          
         </div>
       </main>
     </>
