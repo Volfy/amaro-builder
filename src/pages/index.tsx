@@ -1,11 +1,13 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import { SignInButton, UserButton, useUser } from "@clerk/nextjs";
+import Image from 'next/image'
 
 import { api } from "~/utils/api";
 
 const Home: NextPage = () => {
   const user = useUser()
+  const name = api.example.testing.useQuery()
 
   return (
     <>
@@ -29,6 +31,14 @@ const Home: NextPage = () => {
               <div>Recipes</div>
               <div>Ingredients</div>
             </div>
+          </div>
+
+          <div className="bg-amber-800 w-24 h-24">
+            {name.data ? name.data.result.map(u => 
+              <div key={u.id}>{u.username} 
+                <Image src={u.profileImageUrl} alt="Profile picture" width={300} height={300}/>
+              </div>
+              ) : "loading"}
           </div>
         </div>
       </main>

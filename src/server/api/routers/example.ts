@@ -3,51 +3,46 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { env } from "~/env.mjs";
 
-import neo4j from 'neo4j-driver'
-import type { Node, Relationship, Integer } from 'neo4j-driver';
+import Neode from 'neode'
+import Recipe from '../../models/Recipe'
+import UserSchema from '../../models/User'
+import { clerkClient } from "@clerk/nextjs";
+import type { User } from "@clerk/nextjs/dist/types/server";
+
+const filterUserForClient = (user: User) => {
+  return { id: user.id, 
+    username: user.username, 
+    profileImageUrl: user.profileImageUrl
+  }
+}
 
 export const exampleRouter = createTRPCRouter({
-  hello: publicProcedure
-    .input(z.object({ text: z.string() }))
-    .query(({ input }) => {
-      return {
-        greeting: `Hello ${input.text}`,
-      };
-    }),
   testing: publicProcedure
-    .input(z.object({ text: z.string() }))
     .query(async () => {
-      const driver = neo4j.driver(env.NEO4J_URI, neo4j.auth.basic(env.NEO4J_USERNAME, env.NEO4J_PASSWORD))
-      const session = driver.session()
 
-      interface RecipeProperties {
-        name: string,
-        good: boolean
-      }
-
-      type Recipe = Node<Integer, RecipeProperties>
-
-      interface RecipeReceived {
-        r: Recipe
-      }
+      const instance = Neode.fromEnv()
+        .with({
+          Recipe: Recipe,
+          User: UserSchema
+      })
       
-      try {
-        const result = await session.executeRead(tx => tx.run<RecipeReceived>(
-          'MATCH (r:Recipe {good: $good}) RETURN r',
-          { good: true }
-        ))
+      /* await instance.create('User', {
+          clerkId: 'user_xxxx',
+          name: 'xxxx',
+          active: true,
+      }) */
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      const received = (await instance.all('User')).map(u => u.properties())
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
+      const userId = received.map(u => u.clerkId)
 
-        const record = result.records[0]?.get('r')
-        const name = record?.properties.name
-       
-        return {
-          result: name
-        };
-      } finally {
-        await session.close();
-        await driver.close();
+      const users = (await clerkClient.users.getUserList({
+        userId: userId
+      })).map(filterUserForClient)
+
+      return {
+        result: users
       }
-      
       
     })
 });
