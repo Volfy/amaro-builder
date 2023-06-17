@@ -7,6 +7,8 @@ import { Webhook } from 'svix';
 import { buffer } from 'micro';
 import { env } from "~/env.mjs";
 import type { NextApiRequest, NextApiResponse } from 'next';
+import Neode from 'neode'
+import UserSchema from '../../server/models/User'
 
 export const config = {
   api: {
@@ -14,7 +16,15 @@ export const config = {
   }
 }
 
+interface UserObjectData {
+  id: string,
+}
 
+interface UserCreated {
+  data: UserObjectData,
+  object: string,
+  type: string,
+}
 
 const secret = env.CLERK_WEBHOOK_SECRET
 
@@ -27,15 +37,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   const headers = req.headers;
 
   const wh = new Webhook(secret);
-  let msg;
+  let msg: UserCreated;
   try {
-    msg = wh.verify(payload, headers as any);
+    msg = wh.verify(payload, headers as any) as UserCreated;
   } catch (err) {
     res.status(400).json({ message: 'Bad signature'});
     return;
   }
 
-  console.log(msg)
+  const instance = Neode.fromEnv()
+    .with({
+      User: UserSchema
+  })
+      
+  await instance.create('User', {
+      clerkId: msg.data.id,
+      active: true,
+  })
   
   res.json({})
 }
