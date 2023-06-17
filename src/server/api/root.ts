@@ -1,6 +1,5 @@
 import { createTRPCRouter } from "~/server/api/trpc";
 import { exampleRouter } from "~/server/api/routers/example";
-import { webhookRouter } from "~/server/api/routers/webhook";
 
 /**
  * This is the primary router for your server.
@@ -9,7 +8,6 @@ import { webhookRouter } from "~/server/api/routers/webhook";
  */
 export const appRouter = createTRPCRouter({
   example: exampleRouter,
-  webhook: webhookRouter,
 });
 
 // export type definition of API
