@@ -182,7 +182,7 @@ const Home: NextPage = () => {
             </div>
           </header>
 
-          <main className="flex w-10/12 flex-grow flex-col gap-3 py-4">
+          <main className="flex w-10/12 flex-grow flex-col gap-3 pt-4">
             <div className="flex justify-between text-2xl">
               <div className="font-medium">{amaroName}</div>
               <div>
@@ -222,7 +222,7 @@ const Home: NextPage = () => {
 
               <div className="row-span-3 row-start-3 aspect-[7/8] max-w-sm rounded-3xl bg-black"></div>
 
-              <div className="col-span-4 col-start-3 row-span-1 row-start-3 grid grid-flow-dense auto-rows-min grid-cols-2 self-center text-lg">
+              <div className="col-span-4 col-start-3 row-span-1 row-start-3 grid grid-flow-dense auto-rows-min grid-cols-3 self-center text-lg">
                 {ingredients.map((i) => (
                   <div key={i.name} className="">
                     {i.amount}
@@ -241,7 +241,7 @@ const Home: NextPage = () => {
             </div>
           </main>
 
-          <section className="flex h-2/5 w-10/12 flex-col justify-evenly  text-center">
+          <section className="flex h-2/5 w-10/12 flex-col justify-evenly text-center">
             <div className="text-2xl">Similar Recipes</div>
             <div className="flex w-full items-center justify-between">
               <div className="flex flex-col gap-6 py-6">
@@ -261,8 +261,25 @@ const Home: NextPage = () => {
             </div>
           </section>
 
-          <footer className="flex justify-center pb-4 text-sm">
-            © Andre Sammut <br />
+          <footer className="flex flex-col items-center justify-center pb-4 text-sm">
+            <div className="flex items-center gap-x-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height={12}
+                viewBox="0 0 980 980"
+              >
+                <circle
+                  cx="490"
+                  cy="490"
+                  r="440"
+                  fill="none"
+                  stroke="#000"
+                  stroke-width="100"
+                />
+                <path d="M219,428H350a150,150 0 1 1 0,125H219a275,275 0 1 0 0-125z" />
+              </svg>
+              Andre Sammut
+            </div>
             sammut.dev [gh] [li]
           </footer>
         </div>
