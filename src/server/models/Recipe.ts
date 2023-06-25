@@ -19,6 +19,13 @@ const Recipe : SchemaObject = {
     type: 'string',
     required: true,
   },
+  dateCreated: {
+    type: 'datetime', 
+    required: true,
+  },
+  imageUrl: {
+    type: 'string',
+  },
 
   hasIngredient: {
     type: 'relationships',

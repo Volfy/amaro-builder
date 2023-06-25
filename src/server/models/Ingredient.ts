@@ -9,8 +9,8 @@ const Ingredient : SchemaObject = {
     type: 'string',
     required: true,
   },
-  otherNames: 'string',
-  desc: 'string',
+  altNames: 'string',
+  longDesc: 'string',
   shortDesc: 'string',
   usageNotes: 'string',
 

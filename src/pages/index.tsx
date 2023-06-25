@@ -172,6 +172,9 @@ const Home: NextPage = () => {
         <div className="flex h-full flex-col items-center justify-between 2xl:max-w-7xl">
           <header className="flex h-28 w-full flex-row items-center justify-between gap-4 p-4 text-2xl">
             <div>
+              {!user.isLoaded && 
+              <div className="bg-black w-16 h-16 rounded-full"></div>  
+            }
               {user.isSignedIn && (
                 <UserButton
                   afterSignOutUrl="/"
@@ -222,7 +225,7 @@ const Home: NextPage = () => {
                 <div className="flex flex-row gap-10">
                   <div className="flex flex-col">
                     <div className="text-xs">Uploaded by</div>
-                    <div className="font-medium">{retUser?.username}</div>
+                    <div className="font-medium">{retUser?.username ? retUser?.username : 'loading' }</div>
                   </div>
 
                   {retUser?.profileImageUrl ? (
@@ -233,7 +236,7 @@ const Home: NextPage = () => {
                       height={200}
                       className="h-10 w-10 rounded-full"
                     ></Image>
-                  ) : null}
+                  ) : <div className="bg-black w-10 h-10 rounded-full"></div>}
                 </div>
                 <div className="text-xs">{date}</div>
               </div>
