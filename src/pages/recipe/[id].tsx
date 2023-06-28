@@ -5,7 +5,8 @@ import { useRouter } from "next/router";
 import { api } from "~/utils/api";
 
 const Recipe: NextPage = () => {
-  const retUser = api.example.testing.useQuery().data?.result[0];
+  const userId = "user_2RLPhQyrj2ArV0Y3JXz20b5rjQb";
+  const user = api.user.getUserDetails.useQuery(userId).data?.result;
   const router = useRouter();
 
   const tags = ["Herbal", "Smoky", "Bitter", "Vanilla", "Warm"];
@@ -193,13 +194,13 @@ const Recipe: NextPage = () => {
               <div className="flex flex-col">
                 <div className="text-xs">Uploaded by</div>
                 <div className="font-medium">
-                  {retUser?.username ? retUser?.username : "loading"}
+                  {user?.username ? user?.username : "loading"}
                 </div>
               </div>
 
-              {retUser?.profileImageUrl ? (
+              {user?.profileImageUrl ? (
                 <Image
-                  src={retUser?.profileImageUrl}
+                  src={user?.profileImageUrl}
                   alt=""
                   width={200}
                   height={200}
