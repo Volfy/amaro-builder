@@ -1,48 +1,49 @@
-import type { SchemaObject } from 'neode'
+import type { SchemaObject } from "neode";
 
-const Recipe : SchemaObject = {
+const Recipe: SchemaObject = {
   recipeId: {
-    type: 'uuid',
-    primary: true
+    type: "uuid",
+    primary: true,
   },
   name: {
-    type: 'string',
+    type: "string",
     required: true,
   },
-  steps: 'string',
-  notes: 'string',
+  steps: "string",
+  notes: "string",
   defaultVolume: {
-    type: 'float',
+    type: "float",
     required: true,
   },
   defaultMeasure: {
-    type: 'string',
+    type: "string",
     required: true,
   },
   dateCreated: {
-    type: 'datetime', 
+    type: "datetime",
     required: true,
   },
   imageUrl: {
-    type: 'string',
+    type: "string",
   },
 
   hasIngredient: {
-    type: 'relationships',
-    direction: 'out',
-    relationship: 'HAS_INGREDIENT',
-    target: 'Ingredient',
+    type: "relationships",
+    direction: "out",
+    relationship: "HAS_INGREDIENT",
+    target: "Ingredient",
     properties: {
-      unitOfMeasure: 'string',
-      measure: 'number',
-    }
+      unitOfMeasure: "string",
+      measure: "number",
+      order: "number",
+    },
   },
   hasTag: {
-    type: 'relationships',
-    direction: 'out',
-    relationship: 'HAS_TAG',
-    target: 'Tag'
+    type: "relationships",
+    direction: "out",
+    relationship: "HAS_TAG",
+    target: "Tag",
   },
 };
 
-export default Recipe
+export default Recipe;

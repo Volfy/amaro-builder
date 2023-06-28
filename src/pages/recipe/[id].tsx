@@ -5,169 +5,29 @@ import { useRouter } from "next/router";
 import { api } from "~/utils/api";
 
 const Recipe: NextPage = () => {
-  const userId = "user_2RLPhQyrj2ArV0Y3JXz20b5rjQb";
-  const user = api.user.getUserDetails.useQuery(userId).data?.result;
   const router = useRouter();
+  const id = router.query.id as string;
+  const recipe = api.recipe.getFullRecipe.useQuery(id).data?.result;
+  const userId = recipe?.user as string;
+  const user = api.user.getUserDetails.useQuery(userId).data?.result;
+
+  const recipeDetails = recipe?.recipe;
+  const ingredients = recipe?.ingredients;
+  const date = recipe?.date;
+  const steps = recipeDetails?.steps
+    .replace(/[0-9]?[0-9]\. /g, "--.--")
+    .split("--.--")
+    .filter((x) => x);
 
   const tags = ["Herbal", "Smoky", "Bitter", "Vanilla", "Warm"];
-  const tastingNotes =
-    "A light refreshing rabarbaro with hints of vanilla, a smoky aroma and nice herbal and minty finish";
-  const amaroName = "Testing Amaro";
-  const defaultAmount = 500;
-  const defaultMeasure = "ml";
-  const date = "on 1st June 2023 at 16:34";
-  const ingredients = [
-    {
-      name: "Citrus Peel",
-      amount: 1,
-      unit: "g",
-      desc: "peel from citrus fruit, provides a bright and warm acidity",
-      alt: "orange, lemon, lime, citron, Citrica Ceruluea",
-    },
-    {
-      name: "Citrus Peel",
-      amount: 1,
-      unit: "g",
-      desc: "peel from citrus fruit, provides a bright and warm acidity",
-      alt: "orange, lemon, lime, citron, Citrica Ceruluea",
-    },
-    {
-      name: "Citrus Peel",
-      amount: 1,
-      unit: "g",
-      desc: "peel from citrus fruit, provides a bright and warm acidity",
-      alt: "orange, lemon, lime, citron, Citrica Ceruluea",
-    },
-    {
-      name: "Citrus Peel",
-      amount: 1,
-      unit: "g",
-      desc: "peel from citrus fruit, provides a bright and warm acidity",
-      alt: "orange, lemon, lime, citron, Citrica Ceruluea",
-    },
-    {
-      name: "Citrus Peel",
-      amount: 1,
-      unit: "g",
-      desc: "peel from citrus fruit, provides a bright and warm acidity",
-      alt: "orange, lemon, lime, citron, Citrica Ceruluea",
-    },
-    {
-      name: "Citrus Peel",
-      amount: 1,
-      unit: "g",
-      desc: "peel from citrus fruit, provides a bright and warm acidity",
-      alt: "orange, lemon, lime, citron, Citrica Ceruluea",
-    },
-    {
-      name: "Citrus Peel",
-      amount: 1,
-      unit: "g",
-      desc: "peel from citrus fruit, provides a bright and warm acidity",
-      alt: "orange, lemon, lime, citron, Citrica Ceruluea",
-    },
-    {
-      name: "Citrus Peel",
-      amount: 1,
-      unit: "g",
-      desc: "peel from citrus fruit, provides a bright and warm acidity",
-      alt: "orange, lemon, lime, citron, Citrica Ceruluea",
-    },
-    {
-      name: "Citrus Peel",
-      amount: 1,
-      unit: "g",
-      desc: "peel from citrus fruit, provides a bright and warm acidity",
-      alt: "orange, lemon, lime, citron, Citrica Ceruluea",
-    },
-    {
-      name: "Citrus Peel",
-      amount: 1,
-      unit: "g",
-      desc: "peel from citrus fruit, provides a bright and warm acidity",
-      alt: "orange, lemon, lime, citron, Citrica Ceruluea",
-    },
-    {
-      name: "Citrus Peel",
-      amount: 1,
-      unit: "g",
-      desc: "peel from citrus fruit, provides a bright and warm acidity",
-      alt: "orange, lemon, lime, citron, Citrica Ceruluea",
-    },
-    {
-      name: "Citrus Peel",
-      amount: 1,
-      unit: "g",
-      desc: "peel from citrus fruit, provides a bright and warm acidity",
-      alt: "orange, lemon, lime, citron, Citrica Ceruluea",
-    },
-    {
-      name: "Citrus Peel",
-      amount: 1,
-      unit: "g",
-      desc: "peel from citrus fruit, provides a bright and warm acidity",
-      alt: "orange, lemon, lime, citron, Citrica Ceruluea",
-    },
-    {
-      name: "Citrus Peel",
-      amount: 1,
-      unit: "g",
-      desc: "peel from citrus fruit, provides a bright and warm acidity",
-      alt: "orange, lemon, lime, citron, Citrica Ceruluea",
-    },
-    {
-      name: "Citrus Peel",
-      amount: 1,
-      unit: "g",
-      desc: "peel from citrus fruit, provides a bright and warm acidity",
-      alt: "orange, lemon, lime, citron, Citrica Ceruluea",
-    },
-    {
-      name: "Citrus Peel",
-      amount: 1,
-      unit: "g",
-      desc: "peel from citrus fruit, provides a bright and warm acidity",
-      alt: "orange, lemon, lime, citron, Citrica Ceruluea",
-    },
-    {
-      name: "Citrus Peel",
-      amount: 1,
-      unit: "g",
-      desc: "peel from citrus fruit, provides a bright and warm acidity",
-      alt: "orange, lemon, lime, citron, Citrica Ceruluea",
-    },
-    {
-      name: "Citrus Peel",
-      amount: 1,
-      unit: "g",
-      desc: "peel from citrus fruit, provides a bright and warm acidity",
-      alt: "orange, lemon, lime, citron, Citrica Ceruluea",
-    },
-    {
-      name: "Citrus Peel",
-      amount: 1,
-      unit: "g",
-      desc: "peel from citrus fruit, provides a bright and warm acidity",
-      alt: "orange, lemon, lime, citron, Citrica Ceruluea",
-    },
-    {
-      name: "Citrus Peel",
-      amount: 1,
-      unit: "g",
-      desc: "peel from citrus fruit, provides a bright and warm acidity",
-      alt: "orange, lemon, lime, citron, Citrica Ceruluea",
-    },
-  ];
-  const steps = ["Mix ingredients"];
 
   return (
     <>
-      <div>{router.query.id}</div>
       <section className="flex w-10/12 flex-grow flex-col gap-3 pt-4">
         <div className="flex justify-between text-2xl">
-          <div className="font-medium">{amaroName}</div>
+          <div className="font-medium">{recipeDetails?.name}</div>
           <div>
-            {defaultAmount} {defaultMeasure}
+            {recipeDetails?.defaultVolume} {recipeDetails?.defaultMeasure}
           </div>
         </div>
 
@@ -175,7 +35,7 @@ const Recipe: NextPage = () => {
 
         <div className="grid grid-flow-col grid-cols-[6fr_48px_6fr_48px_3fr] grid-rows-[1fr_24px_3fr_24px_2fr]">
           <div className="px-6 text-left italic text-orange-800">
-            {tastingNotes}
+            {recipeDetails?.notes}
           </div>
 
           <div className="col-start-3 flex flex-row flex-wrap justify-center gap-x-8 gap-y-2">
@@ -189,8 +49,8 @@ const Recipe: NextPage = () => {
             ))}
           </div>
 
-          <div className="col-start-5 flex flex-col items-end pr-4">
-            <div className="flex flex-row gap-10">
+          <div className="col-start-5 flex flex-col self-start justify-self-end pr-4">
+            <div className="flex flex-row gap-10 py-1">
               <div className="flex flex-col">
                 <div className="text-xs">Uploaded by</div>
                 <div className="font-medium">
@@ -210,22 +70,25 @@ const Recipe: NextPage = () => {
                 <div className="h-10 w-10 rounded-full bg-black"></div>
               )}
             </div>
-            <div className="text-xs">{date}</div>
+            <div className="text-xs">
+              on {date?.toLocaleDateString("en-mt")} at{" "}
+              {date?.toLocaleTimeString("en-mt", { timeStyle: "short" })}
+            </div>
           </div>
 
           <div className="row-span-3 row-start-3 aspect-[7/8] max-w-sm rounded-3xl bg-black"></div>
 
-          <div className="col-span-4 col-start-3 row-span-1 row-start-3 grid grid-flow-dense auto-rows-min grid-cols-3 self-center text-lg">
-            {ingredients.map((i, idx) => (
-              <div key={i.name + idx.toString()} className="relative">
+          <div className="col-span-4 col-start-3 row-span-1 row-start-3 grid grid-flow-dense auto-rows-min grid-cols-2 self-center text-lg">
+            {ingredients?.map((i) => (
+              <div key={i.ingredientId} className="relative">
                 <span className="peer">
-                  {i.amount}
-                  {i.unit} {i.name}
+                  {i.measure}
+                  {i.unitOfMeasure} {i.primaryName}
                 </span>
                 <div className="invisible absolute -left-12 top-6 z-10 block w-48 rounded-lg bg-orange-200 p-4 text-xs opacity-0 peer-hover:visible peer-hover:opacity-100 peer-hover:transition-opacity peer-hover:delay-200">
                   <div className="flex flex-col gap-2 text-center">
-                    <div>{i.alt}</div>
-                    <div>{i.desc}</div>
+                    <div>{i.altNames}</div>
+                    <div>{i.shortDesc}</div>
                     <div>tags</div>
                   </div>
                 </div>
@@ -235,7 +98,7 @@ const Recipe: NextPage = () => {
 
           <div className="col-span-4 col-start-3 row-span-1 row-start-5 text-lg">
             <ol className="list-decimal">
-              {steps.map((s) => (
+              {steps?.map((s) => (
                 <li key={s}>{s}</li>
               ))}
             </ol>
