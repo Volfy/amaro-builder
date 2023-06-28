@@ -4,7 +4,7 @@ import { createTRPCRouter, publicProcedure } from "../trpc";
 import Neode from "neode";
 import Ingredient from "~/server/models/Ingredient";
 import User from "~/server/models/User";
-import { DateTime } from "neo4j-driver";
+import type { DateTime } from "neo4j-driver";
 
 type ReturnedRecipe = {
   recipeId: "string";

@@ -78,7 +78,7 @@ const Recipe: NextPage = () => {
 
           <div className="row-span-3 row-start-3 aspect-[7/8] max-w-sm rounded-3xl bg-black"></div>
 
-          <div className="col-span-4 col-start-3 row-span-1 row-start-3 grid grid-flow-dense auto-rows-min grid-cols-2 self-center text-lg">
+          <div className="col-span-4 col-start-3 row-span-1 row-start-3 mt-2 grid grid-flow-dense auto-rows-min grid-cols-2 self-start text-lg">
             {ingredients?.map((i) => (
               <div key={i.ingredientId} className="relative">
                 <span className="peer">
