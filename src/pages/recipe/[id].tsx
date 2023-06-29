@@ -13,12 +13,9 @@ const Recipe: NextPage = () => {
 
   const recipeDetails = recipe?.recipe;
   const ingredients = recipe?.ingredients;
-  const date = recipe?.date;
+  const date = recipeDetails?.dateCreated;
   const steps = recipeDetails?.steps
-    .replace(/[0-9]?[0-9]\. /g, "--.--")
-    .split("--.--")
-    .filter((x) => x);
-  const imageUrl = recipe?.imageUrl;
+  const imageUrl = recipeDetails?.imageUrl;
 
   const tags = ["Herbal", "Smoky", "Bitter", "Vanilla", "Warm"];
 

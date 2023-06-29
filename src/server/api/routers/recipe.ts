@@ -12,10 +12,21 @@ type ReturnedRecipe = {
   name: "string";
   dateCreated: DateTime;
   notes: "string";
-  steps: "string";
+  steps: string;
   defaultVolume: "string";
   defaultMeasure: "string";
-  imageUrl: "string";
+  imageUrl: string;
+};
+
+type ProcessedRecipe = {
+  recipeId: "string";
+  name: "string";
+  dateCreated: Date;
+  notes: "string";
+  steps: Array<string>;
+  defaultVolume: "string";
+  defaultMeasure: "string";
+  imageUrl: string;
 };
 
 type ReturnedIngredient = {
@@ -91,7 +102,12 @@ export const recipeRouter = createTRPCRouter({
     ).records.map((rec) => rec.toObject() as ReturnedFullRecipe);
 
     const recipeDetails = retRecipes[0]?.r.properties as ReturnedRecipe;
-    const date = parseDate(recipeDetails.dateCreated);
+    const processedRecipeDetails = {
+      ...recipeDetails,
+      imageUrl: (await utapi.getFileUrls(recipeDetails.imageUrl))[0]?.url || '',
+      steps: JSON.parse(recipeDetails.steps) as Array<string>,
+      dateCreated: parseDate(recipeDetails.dateCreated),
+    } as ProcessedRecipe;
     const userId = retRecipes[0]?.u.properties.clerkId as string;
     const ingredients = retRecipes
       .map((o) => {
@@ -101,15 +117,12 @@ export const recipeRouter = createTRPCRouter({
         };
       })
       .sort((a, b) => a.order - b.order);
-    const imageUrl = (await utapi.getFileUrls(recipeDetails.imageUrl))[0]?.url;
 
     return {
       result: {
         user: userId,
-        recipe: recipeDetails,
-        date: date,
+        recipe: processedRecipeDetails,
         ingredients: ingredients,
-        imageUrl: imageUrl,
       },
     };
   }),
