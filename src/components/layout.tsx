@@ -18,11 +18,11 @@ const Layout = ({ children }: LayoutProps) => {
       </Head>
 
       <div className="flex h-screen w-screen items-center justify-center">
-        <div className="flex h-full w-full flex-col items-center justify-between 2xl:max-w-7xl">
-          <header className="flex h-28 w-full flex-row items-center justify-between gap-4 p-4 text-2xl">
+        <div className="flex h-full w-full flex-col items-center justify-between bg-orange-100 shadow-lg shadow-orange-950 2xl:max-w-7xl">
+          <header className="flex h-28 w-full flex-row items-center justify-between gap-4 bg-orange-200 p-4 px-16 text-2xl shadow shadow-orange-800/40">
             <div>
-              {(!user.isLoaded && user.isSignedIn) && (
-                <div className="h-16 w-16 rounded-full bg-black"></div>
+              {!user.isLoaded && user.isSignedIn && (
+                <div className="h-16 w-16 rounded-full bg-black shadow-lg"></div>
               )}
               {user.isSignedIn && (
                 <UserButton
@@ -30,7 +30,7 @@ const Layout = ({ children }: LayoutProps) => {
                   appearance={{
                     elements: {
                       avatarImage: "w-16 h-16",
-                      avatarBox: "w-16 h-16",
+                      avatarBox: "w-16 h-16 hover:scale-105",
                     },
                   }}
                 />
@@ -39,13 +39,28 @@ const Layout = ({ children }: LayoutProps) => {
             </div>
 
             <div className="flex flex-row justify-between gap-12">
-              <Link href="/">Home</Link>
-              <Link href="/create">Create</Link>
-              <Link href="/recipe">View</Link>
+              <Link
+                href="/"
+                className="underline decoration-black underline-offset-8 hover:scale-105 hover:decoration-orange-600"
+              >
+                Home
+              </Link>
+              <Link
+                href="/create"
+                className="underline decoration-black underline-offset-8 hover:scale-105 hover:decoration-orange-600"
+              >
+                Create
+              </Link>
+              <Link
+                href="/recipe"
+                className="underline decoration-black underline-offset-8 hover:scale-105 hover:decoration-orange-600"
+              >
+                View
+              </Link>
             </div>
           </header>
           {children}
-          <footer className="flex flex-col items-center justify-center pb-4 text-sm">
+          <footer className="flex h-20 w-full flex-col items-center justify-center bg-orange-200 pb-1 text-sm shadow-inner shadow-orange-800/40">
             <div className="flex items-center gap-x-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -62,9 +77,9 @@ const Layout = ({ children }: LayoutProps) => {
                 />
                 <path d="M219,428H350a150,150 0 1 1 0,125H219a275,275 0 1 0 0-125z" />
               </svg>
-              Andre Sammut
+              André Sasha Sammut
             </div>
-            <div className="flex flex-row gap-1 text-orange-800">
+            <div className="flex flex-row gap-1 text-violet-950">
               <a href="https://sammut.dev" className="hover:text-orange-700">
                 sammut.dev
               </a>
