@@ -21,7 +21,7 @@ const Layout = ({ children }: LayoutProps) => {
         <div className="flex h-full w-full flex-col items-center justify-between 2xl:max-w-7xl">
           <header className="flex h-28 w-full flex-row items-center justify-between gap-4 p-4 text-2xl">
             <div>
-              {!user.isLoaded && (
+              {(!user.isLoaded && user.isSignedIn) && (
                 <div className="h-16 w-16 rounded-full bg-black"></div>
               )}
               {user.isSignedIn && (

@@ -30,6 +30,10 @@ const config = {
       }
     ]
    
+  },
+
+  experimental: {
+    esmExternals: false
   }
 };
 export default config;

@@ -15,14 +15,17 @@
     "@trpc/next": "^10.9.0",
     "@trpc/react-query": "^10.9.0",
     "@trpc/server": "^10.9.0",
+    "@uploadthing/react": "^5.1.0",
     "micro": "^10.0.1",
     "neo4j-driver": "^5.9.1",
     "neode": "^0.4.9",
     "next": "^13.2.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-dropzone": "^14.2.3",
     "superjson": "1.9.1",
     "svix": "^1.4.12",
+    "uploadthing": "^5.1.0",
     "zod": "^3.20.6"
   },
   "devDependencies": {
