@@ -27,7 +27,13 @@ const config = {
         protocol: 'https',
         hostname:  "images.clerk.dev",
         port: ''
+      },
+      {
+        protocol: 'https',
+        hostname: "uploadthing-prod.s3.**.amazonaws.com",
+        port: ''
       }
+
     ]
    
   },

@@ -18,6 +18,7 @@ const Recipe: NextPage = () => {
     .replace(/[0-9]?[0-9]\. /g, "--.--")
     .split("--.--")
     .filter((x) => x);
+  const imageUrl = recipe?.imageUrl;
 
   const tags = ["Herbal", "Smoky", "Bitter", "Vanilla", "Warm"];
 
@@ -75,8 +76,16 @@ const Recipe: NextPage = () => {
               {date?.toLocaleTimeString("en-mt", { timeStyle: "short" })}
             </div>
           </div>
-
-          <div className="row-span-3 row-start-3 aspect-[7/8] max-w-sm rounded-3xl bg-black"></div>
+          <div className="relative row-span-3 row-start-3 aspect-[7/8] max-w-sm overflow-hidden rounded-3xl bg-black">
+            {imageUrl && (
+              <Image
+                alt={recipeDetails?.name || ""}
+                src={imageUrl}
+                fill={true}
+                className="max-w-sm rounded-3xl object-cover"
+              ></Image>
+            )}
+          </div>
 
           <div className="col-span-4 col-start-3 row-span-1 row-start-3 mt-2 grid grid-flow-dense auto-rows-min grid-cols-2 self-start text-lg">
             {ingredients?.map((i) => (
@@ -110,17 +119,44 @@ const Recipe: NextPage = () => {
         <div className="text-2xl">Similar Recipes</div>
         <div className="flex w-full items-center justify-between">
           <div className="flex flex-col gap-6 py-6">
-            <div className="aspect-[7/8] h-72 rounded-3xl bg-black"></div>
+            <div className="relative aspect-[7/8] h-72 rounded-3xl bg-black">
+              {imageUrl && (
+                <Image
+                  alt="testing 1"
+                  src={imageUrl}
+                  fill={true}
+                  className="max-w-sm rounded-3xl object-cover"
+                ></Image>
+              )}
+            </div>
             <div>Testing 1</div>
           </div>
 
           <div className="flex flex-col gap-6 py-6">
-            <div className="aspect-[7/8] h-72 rounded-3xl bg-black"></div>
+            <div className="relative aspect-[7/8] h-72 rounded-3xl bg-black">
+              {imageUrl && (
+                <Image
+                  alt="testing 1"
+                  src={imageUrl}
+                  fill={true}
+                  className="max-w-sm rounded-3xl object-cover"
+                ></Image>
+              )}
+            </div>
             <div>Testing 1</div>
           </div>
 
           <div className="flex flex-col gap-6 py-6">
-            <div className="aspect-[7/8] h-72 rounded-3xl bg-black"></div>
+            <div className="relative aspect-[7/8] h-72 rounded-3xl bg-black">
+              {imageUrl && (
+                <Image
+                  alt="testing 1"
+                  src={imageUrl}
+                  fill={true}
+                  className="max-w-sm rounded-3xl object-cover"
+                ></Image>
+              )}
+            </div>
             <div>Testing 1</div>
           </div>
         </div>

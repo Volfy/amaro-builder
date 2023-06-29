@@ -5,6 +5,7 @@ import Neode from "neode";
 import Ingredient from "~/server/models/Ingredient";
 import User from "~/server/models/User";
 import type { DateTime } from "neo4j-driver";
+import { utapi } from "uploadthing/server";
 
 type ReturnedRecipe = {
   recipeId: "string";
@@ -100,6 +101,7 @@ export const recipeRouter = createTRPCRouter({
         };
       })
       .sort((a, b) => a.order - b.order);
+    const imageUrl = (await utapi.getFileUrls(recipeDetails.imageUrl))[0]?.url;
 
     return {
       result: {
@@ -107,6 +109,7 @@ export const recipeRouter = createTRPCRouter({
         recipe: recipeDetails,
         date: date,
         ingredients: ingredients,
+        imageUrl: imageUrl,
       },
     };
   }),
