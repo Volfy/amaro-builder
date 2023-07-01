@@ -17,9 +17,9 @@ const Layout = ({ children }: LayoutProps) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="flex h-screen w-screen items-center justify-center ">
-        <div className="flex h-full w-full flex-col items-center justify-between bg-orange-100 shadow-lg shadow-orange-950 2xl:max-w-7xl bg-[url('/bggrain.png')]">
-          <header className="flex h-28 w-full flex-row items-center justify-between gap-4 bg-orange-200 p-4 px-16 text-2xl shadow shadow-orange-800/40">
+      <div className="flex min-h-screen w-screen items-center justify-center ">
+        <div className="flex h-fit min-h-screen flex-col items-center justify-between bg-orange-100 bg-[url('/bggrain.png')] shadow-lg shadow-orange-950 2xl:max-w-7xl">
+          <header className="mb-4 flex h-min w-full flex-row items-center justify-between gap-4 bg-orange-200 p-4 px-16 text-xl shadow shadow-orange-800/40 2xl:text-2xl">
             <div>
               {!user.isLoaded && user.isSignedIn && (
                 <div className="h-16 w-16 rounded-full bg-black shadow-lg"></div>
@@ -29,8 +29,8 @@ const Layout = ({ children }: LayoutProps) => {
                   afterSignOutUrl="/"
                   appearance={{
                     elements: {
-                      avatarImage: "w-16 h-16",
-                      avatarBox: "w-16 h-16 hover:scale-105",
+                      avatarImage: "w-12 h-12 2xl:w-16 2xl:h-16",
+                      avatarBox: "w-12 h-12 2xl:w-16 2xl:h-16 hover:scale-105",
                     },
                   }}
                 />
@@ -60,7 +60,7 @@ const Layout = ({ children }: LayoutProps) => {
             </div>
           </header>
           {children}
-          <footer className="flex h-20 w-full flex-col items-center justify-center bg-orange-200 pb-1 text-sm shadow-[0_-1px_3px_0] shadow-orange-800/40">
+          <footer className="mt-4 flex h-20 w-full flex-col items-center justify-center bg-orange-200 pb-1 text-sm shadow-[0_-1px_3px_0] shadow-orange-800/40">
             <div className="flex items-center gap-x-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

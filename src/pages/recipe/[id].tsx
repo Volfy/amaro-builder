@@ -90,7 +90,7 @@ const Recipe: NextPage = () => {
   return (
     <>
       <section className="flex w-9/12 flex-col justify-center gap-3">
-        <div className="flex justify-between text-2xl">
+        <div className="flex justify-between text-xl 2xl:text-2xl">
           <div className="font-medium">{recipeDetails?.name}</div>
           <div>
             {recipeDetails?.defaultVolume} {recipeDetails?.defaultMeasure}
@@ -99,12 +99,12 @@ const Recipe: NextPage = () => {
 
         <div className="mb-1 h-0.5 w-full rounded-md bg-orange-600"></div>
 
-        <div className="grid grid-flow-col grid-cols-[6fr_48px_6fr_48px_3fr] grid-rows-[1fr_32px_2fr_24px_2fr]">
-          <div className="pl-2 text-left text-lg italic text-orange-700">
+        <div className=" grid grid-flow-col-dense auto-rows-min grid-cols-[2fr_2fr_1fr] gap-x-8 gap-y-2 2xl:grid-cols-[6fr_48px_6fr_48px_3fr] 2xl:grid-rows-[1fr_32px_2fr_24px_2fr] 2xl:gap-0">
+          <div className="pl-2 text-left text-base italic text-orange-700 2xl:text-lg">
             {recipeDetails?.notes}
           </div>
 
-          <div className="col-start-3 flex h-fit w-2/3 flex-row flex-wrap justify-center gap-1 justify-self-center">
+          <div className=" col-start-2 flex h-fit w-fit flex-row flex-wrap justify-center gap-1 justify-self-center 2xl:col-start-3 2xl:w-2/3">
             {tags.map((tag) => (
               <div
                 key={tag}
@@ -115,8 +115,8 @@ const Recipe: NextPage = () => {
             ))}
           </div>
 
-          <div className="group col-start-5 flex flex-col self-start justify-self-end rounded-lg bg-orange-200 px-2 py-1 shadow-md shadow-orange-800/20">
-            <div className="flex flex-row gap-10 py-1">
+          <div className="group col-start-3 flex flex-col self-start justify-self-end rounded-lg bg-orange-200 px-2 py-1 shadow-md shadow-orange-800/20 2xl:col-start-5">
+            <div className="flex flex-row gap-0 py-1 lg:gap-10">
               <div className="flex flex-col">
                 <div className="text-xs text-stone-600">Uploaded by</div>
                 <div className="text-violet-950 group-hover:text-orange-700">
@@ -130,10 +130,10 @@ const Recipe: NextPage = () => {
                   alt=""
                   width={200}
                   height={200}
-                  className="h-10 w-10 rounded-full"
+                  className="h-8 w-8 rounded-full 2xl:h-10 2xl:w-10"
                 ></Image>
               ) : (
-                <div className="h-10 w-10 rounded-full bg-black"></div>
+                <div className="h-8 w-8 bg-black 2xl:h-10 2xl:w-10"></div>
               )}
             </div>
             <div className="text-xs text-stone-600">
@@ -143,7 +143,7 @@ const Recipe: NextPage = () => {
           </div>
 
           <div
-            className={`relative row-span-3 row-start-3 aspect-[7/8] max-w-sm overflow-hidden rounded-xl ${
+            className={`relative row-span-2 row-start-2 aspect-[7/8] overflow-hidden rounded-xl 2xl:row-span-4 ${
               !imageUrl ? "bg-black" : ""
             } shadow-md shadow-orange-800/20`}
           >
@@ -153,19 +153,19 @@ const Recipe: NextPage = () => {
                 priority={true}
                 src={imageUrl}
                 fill={true}
-                className="max-w-sm rounded-xl object-cover"
+                className="rounded-xl object-cover"
                 sizes="20vw"
               ></Image>
             )}
           </div>
 
-          <ul className="col-span-4 col-start-3 row-span-1 row-start-3 mt-6 grid grid-flow-dense auto-rows-min grid-cols-2 self-start">
+          <ul className="col-span-2 col-start-2 row-span-1 row-start-2 grid grid-flow-dense auto-rows-min grid-cols-2 self-start 2xl:col-span-4 2xl:col-start-3 2xl:row-start-3 2xl:mt-6">
             {ingredients.map((i) => (
               <Ingredient key={i.ingredientId} ingredient={i} itags={itags} />
             ))}
           </ul>
 
-          <ol className="col-span-4 col-start-3 row-span-1 row-start-5 list-decimal">
+          <ol className="col-span-2 col-start-2 row-span-1 row-start-3 list-decimal 2xl:col-span-4 2xl:col-start-3 2xl:row-start-5">
             {steps?.map((s) => (
               <li key={s}>{s}</li>
             ))}
@@ -173,12 +173,12 @@ const Recipe: NextPage = () => {
         </div>
       </section>
 
-      <section className="flex w-9/12 flex-col justify-evenly text-center">
-        <div className="pb-8 text-2xl">Similar Recipes</div>
+      <section className="flex w-9/12 flex-shrink flex-col justify-evenly text-center">
+        <div className="text-xl 2xl:pb-8 2xl:text-2xl">Similar Recipes</div>
         <div className="flex w-full items-center justify-between">
           <div className="group flex flex-col gap-2 py-1 hover:scale-105">
             <div
-              className={`relative aspect-[7/8] h-60 rounded-lg ${
+              className={`relative aspect-[7/8] h-48 rounded-lg  2xl:h-60 ${
                 !imageUrl ? "bg-black" : ""
               } shadow-md shadow-orange-800/20`}
             >
@@ -200,7 +200,7 @@ const Recipe: NextPage = () => {
 
           <div className="group flex flex-col gap-2 py-1 hover:scale-105">
             <div
-              className={`relative aspect-[7/8] h-60 rounded-lg ${
+              className={`relative aspect-[7/8] h-48 rounded-lg  2xl:h-60 ${
                 !imageUrl ? "bg-black" : ""
               } shadow-md shadow-orange-800/20`}
             >
@@ -222,7 +222,7 @@ const Recipe: NextPage = () => {
 
           <div className="group flex flex-col gap-2 py-1 hover:scale-105">
             <div
-              className={`relative aspect-[7/8] h-60 rounded-lg ${
+              className={`relative aspect-[7/8] h-48 rounded-lg 2xl:h-60 ${
                 !imageUrl ? "bg-black" : ""
               } shadow-md shadow-orange-800/20`}
             >
