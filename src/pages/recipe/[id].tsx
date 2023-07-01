@@ -1,7 +1,7 @@
 import { type NextPage } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
-
+import Ingredient from "~/components/Ingredient";
 import { api } from "~/utils/api";
 
 const Recipe: NextPage = () => {
@@ -21,44 +21,59 @@ const Recipe: NextPage = () => {
     imageUrl: "/loadingbottle.jpg",
     ingredients: [
       {
-        ingredientId: 0,
+        ingredientId: "0",
         measure: "0",
         unitOfMeasure: "g",
         primaryName: "Loading root",
         altNames: "Lorem ipsum",
         shortDesc: "Lorem ipsum dolor",
+        longDesc: "",
+        usageNotes: "",
+        order: 0,
       },
       {
-        ingredientId: 1,
+        ingredientId: "1",
         measure: "0",
         unitOfMeasure: "g",
         primaryName: "Loading root",
         altNames: "Lorem ipsum",
         shortDesc: "Lorem ipsum dolor",
+        longDesc: "",
+        usageNotes: "",
+        order: 0,
       },
       {
-        ingredientId: 2,
+        ingredientId: "2",
         measure: "0",
         unitOfMeasure: "g",
         primaryName: "Loading root",
         altNames: "Lorem ipsum",
         shortDesc: "Lorem ipsum dolor",
+        longDesc: "",
+        usageNotes: "",
+        order: 0,
       },
       {
-        ingredientId: 3,
+        ingredientId: "3",
         measure: "0",
         unitOfMeasure: "g",
         primaryName: "Loading root",
         altNames: "Lorem ipsum",
         shortDesc: "Lorem ipsum dolor",
+        longDesc: "",
+        usageNotes: "",
+        order: 0,
       },
       {
-        ingredientId: 4,
+        ingredientId: "4",
         measure: "0",
         unitOfMeasure: "g",
         primaryName: "Loading root",
         altNames: "Lorem ipsum",
         shortDesc: "Lorem ipsum dolor",
+        longDesc: "",
+        usageNotes: "",
+        order: 0,
       },
     ],
   };
@@ -68,9 +83,6 @@ const Recipe: NextPage = () => {
   const date = recipeDetails?.dateCreated;
   const steps = recipeDetails?.steps;
   const imageUrl = recipeDetails?.imageUrl;
-
-  const trimString = (string: string) =>
-    string.length > 23 ? string.slice(0, 23) + "..." : string;
 
   const tags = ["Herbal", "Smoky", "Bitter", "Vanilla", "Warm"];
   const itags = ["Bitter", "Herbal", "Warm"];
@@ -92,11 +104,11 @@ const Recipe: NextPage = () => {
             {recipeDetails?.notes}
           </div>
 
-          <div className="col-start-3 flex flex-row flex-wrap justify-center gap-x-8 gap-y-2">
+          <div className="col-start-3 flex h-fit w-2/3 flex-row flex-wrap justify-center gap-1 justify-self-center">
             {tags.map((tag) => (
               <div
                 key={tag}
-                className="h-fit w-fit rounded-2xl bg-rose-950 px-4 py-1 text-white shadow-sm shadow-orange-800/50 hover:scale-105"
+                className="h-fit w-fit rounded-md bg-rose-950 px-2 py-0.5 text-white shadow-sm shadow-orange-800/50 hover:scale-105"
               >
                 {tag.toLowerCase()}
               </div>
@@ -130,36 +142,19 @@ const Recipe: NextPage = () => {
             </div>
           </div>
 
-          <div className="relative row-span-3 row-start-3 aspect-[7/8] max-w-sm overflow-hidden rounded-3xl bg-black shadow-md shadow-orange-800/20">
+          <div className="relative row-span-3 row-start-3 aspect-[7/8] max-w-sm overflow-hidden rounded-xl bg-black shadow-md shadow-orange-800/20">
             {imageUrl && (
               <Image
                 alt={recipeDetails?.name || ""}
                 src={imageUrl}
                 fill={true}
-                className="max-w-sm rounded-3xl object-cover"
+                className="max-w-sm rounded-xl object-cover"
               ></Image>
             )}
           </div>
-
           <div className="col-span-4 col-start-3 row-span-1 row-start-3 mt-6 grid grid-flow-dense auto-rows-min grid-cols-2 self-start">
-            {ingredients?.map((i) => (
-              <div key={i.ingredientId} className="relative">
-                <span className="peer">
-                  {i.measure}
-                  {i.unitOfMeasure} {i.primaryName}
-                </span>
-                <div className="invisible absolute top-6 z-10 block w-44 rounded-lg bg-orange-200 p-4 text-xs opacity-0 shadow-xl shadow-orange-800/20 peer-hover:visible peer-hover:opacity-100 peer-hover:transition-opacity peer-hover:delay-200">
-                  <div className="flex flex-col gap-2 text-center text-stone-600">
-                    <div>{trimString(i.altNames)}</div>
-                    <div className="text-black">{i.shortDesc}</div>
-                    <div className="flex flex-row justify-evenly text-rose-950">
-                      {itags.map((tag) => (
-                        <div key={tag}>{tag}</div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
+            {ingredients.map((i) => (
+              <Ingredient key={i.ingredientId} ingredient={i} itags={itags} />
             ))}
           </div>
 
@@ -177,13 +172,13 @@ const Recipe: NextPage = () => {
         <div className="pb-8 text-2xl">Similar Recipes</div>
         <div className="flex w-full items-center justify-between">
           <div className="group flex flex-col gap-2 py-1 hover:scale-105">
-            <div className="relative aspect-[7/8] h-60 rounded-3xl bg-black shadow-md shadow-orange-800/20">
+            <div className="relative aspect-[7/8] h-60 rounded-lg bg-black shadow-md shadow-orange-800/20">
               {imageUrl && (
                 <Image
                   alt="testing 1"
                   src={imageUrl}
                   fill={true}
-                  className="max-w-sm rounded-3xl object-cover"
+                  className="max-w-sm rounded-lg object-cover"
                 ></Image>
               )}
             </div>
@@ -193,13 +188,13 @@ const Recipe: NextPage = () => {
           </div>
 
           <div className="group flex flex-col gap-2 py-1 hover:scale-105">
-            <div className="relative aspect-[7/8] h-60 rounded-3xl bg-black shadow-md shadow-orange-800/20">
+            <div className="relative aspect-[7/8] h-60 rounded-lg bg-black shadow-md shadow-orange-800/20">
               {imageUrl && (
                 <Image
                   alt="testing 1"
                   src={imageUrl}
                   fill={true}
-                  className="max-w-sm rounded-3xl object-cover"
+                  className="max-w-sm rounded-lg object-cover"
                 ></Image>
               )}
             </div>
@@ -209,13 +204,13 @@ const Recipe: NextPage = () => {
           </div>
 
           <div className="group flex flex-col gap-2 py-1 hover:scale-105">
-            <div className="relative aspect-[7/8] h-60 rounded-3xl bg-black shadow-md shadow-orange-800/20">
+            <div className="relative aspect-[7/8] h-60 rounded-lg bg-black shadow-md shadow-orange-800/20">
               {imageUrl && (
                 <Image
                   alt="testing 1"
                   src={imageUrl}
                   fill={true}
-                  className="max-w-sm rounded-3xl object-cover"
+                  className="max-w-sm rounded-lg object-cover"
                 ></Image>
               )}
             </div>

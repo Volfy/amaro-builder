@@ -8,44 +8,44 @@ import type { DateTime } from "neo4j-driver";
 import { utapi } from "uploadthing/server";
 
 type ReturnedRecipe = {
-  recipeId: "string";
-  name: "string";
+  recipeId: string;
+  name: string;
   dateCreated: DateTime;
-  notes: "string";
+  notes: string;
   steps: string;
-  defaultVolume: "string";
-  defaultMeasure: "string";
+  defaultVolume: string;
+  defaultMeasure: string;
   imageUrl: string;
 };
 
 type ProcessedRecipe = {
-  recipeId: "string";
-  name: "string";
+  recipeId: string;
+  name: string;
   dateCreated: Date;
-  notes: "string";
+  notes: string;
   steps: Array<string>;
-  defaultVolume: "string";
-  defaultMeasure: "string";
+  defaultVolume: string;
+  defaultMeasure: string;
   imageUrl: string;
 };
 
 type ReturnedIngredient = {
-  ingredientId: "string";
-  primaryName: "string";
-  altNames: "string";
-  shortDesc: "string";
-  longDesc: "string";
-  usageNotes: "string";
+  ingredientId: string;
+  primaryName: string;
+  altNames: string;
+  shortDesc: string;
+  longDesc: string;
+  usageNotes: string;
 };
 
 type ReturnedRel = {
   order: number;
-  measure: "string";
-  unitOfMeasure: "string";
+  measure: string;
+  unitOfMeasure: string;
 };
 
 type ReturnedUser = {
-  clerkId: "string";
+  clerkId: string;
 };
 
 type ReturnedFullRecipe = {
@@ -104,7 +104,7 @@ export const recipeRouter = createTRPCRouter({
     const recipeDetails = retRecipes[0]?.r.properties as ReturnedRecipe;
     const processedRecipeDetails = {
       ...recipeDetails,
-      imageUrl: (await utapi.getFileUrls(recipeDetails.imageUrl))[0]?.url || '',
+      imageUrl: (await utapi.getFileUrls(recipeDetails.imageUrl))[0]?.url || "",
       steps: JSON.parse(recipeDetails.steps) as Array<string>,
       dateCreated: parseDate(recipeDetails.dateCreated),
     } as ProcessedRecipe;
