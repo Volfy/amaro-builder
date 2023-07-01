@@ -17,8 +17,8 @@ const Layout = ({ children }: LayoutProps) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="flex h-screen w-screen items-center justify-center">
-        <div className="flex h-full w-full flex-col items-center justify-between bg-orange-100 shadow-lg shadow-orange-950 2xl:max-w-7xl">
+      <div className="flex h-screen w-screen items-center justify-center ">
+        <div className="flex h-full w-full flex-col items-center justify-between bg-orange-100 shadow-lg shadow-orange-950 2xl:max-w-7xl bg-[url('/bggrain.png')]">
           <header className="flex h-28 w-full flex-row items-center justify-between gap-4 bg-orange-200 p-4 px-16 text-2xl shadow shadow-orange-800/40">
             <div>
               {!user.isLoaded && user.isSignedIn && (
@@ -60,7 +60,7 @@ const Layout = ({ children }: LayoutProps) => {
             </div>
           </header>
           {children}
-          <footer className="flex h-20 w-full flex-col items-center justify-center bg-orange-200 pb-1 text-sm shadow-inner shadow-orange-800/40">
+          <footer className="flex h-20 w-full flex-col items-center justify-center bg-orange-200 pb-1 text-sm shadow-[0_-1px_3px_0] shadow-orange-800/40">
             <div className="flex items-center gap-x-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

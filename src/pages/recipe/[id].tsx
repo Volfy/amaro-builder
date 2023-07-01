@@ -142,29 +142,34 @@ const Recipe: NextPage = () => {
             </div>
           </div>
 
-          <div className="relative row-span-3 row-start-3 aspect-[7/8] max-w-sm overflow-hidden rounded-xl bg-black shadow-md shadow-orange-800/20">
+          <div
+            className={`relative row-span-3 row-start-3 aspect-[7/8] max-w-sm overflow-hidden rounded-xl ${
+              !imageUrl ? "bg-black" : ""
+            } shadow-md shadow-orange-800/20`}
+          >
             {imageUrl && (
               <Image
                 alt={recipeDetails?.name || ""}
+                priority={true}
                 src={imageUrl}
                 fill={true}
                 className="max-w-sm rounded-xl object-cover"
+                sizes="20vw"
               ></Image>
             )}
           </div>
-          <div className="col-span-4 col-start-3 row-span-1 row-start-3 mt-6 grid grid-flow-dense auto-rows-min grid-cols-2 self-start">
+
+          <ul className="col-span-4 col-start-3 row-span-1 row-start-3 mt-6 grid grid-flow-dense auto-rows-min grid-cols-2 self-start">
             {ingredients.map((i) => (
               <Ingredient key={i.ingredientId} ingredient={i} itags={itags} />
             ))}
-          </div>
+          </ul>
 
-          <div className="col-span-4 col-start-3 row-span-1 row-start-5">
-            <ol className="list-decimal">
-              {steps?.map((s) => (
-                <li key={s}>{s}</li>
-              ))}
-            </ol>
-          </div>
+          <ol className="col-span-4 col-start-3 row-span-1 row-start-5 list-decimal">
+            {steps?.map((s) => (
+              <li key={s}>{s}</li>
+            ))}
+          </ol>
         </div>
       </section>
 
@@ -172,13 +177,19 @@ const Recipe: NextPage = () => {
         <div className="pb-8 text-2xl">Similar Recipes</div>
         <div className="flex w-full items-center justify-between">
           <div className="group flex flex-col gap-2 py-1 hover:scale-105">
-            <div className="relative aspect-[7/8] h-60 rounded-lg bg-black shadow-md shadow-orange-800/20">
+            <div
+              className={`relative aspect-[7/8] h-60 rounded-lg ${
+                !imageUrl ? "bg-black" : ""
+              } shadow-md shadow-orange-800/20`}
+            >
               {imageUrl && (
                 <Image
                   alt="testing 1"
                   src={imageUrl}
                   fill={true}
                   className="max-w-sm rounded-lg object-cover"
+                  sizes="20vw"
+                  priority={false}
                 ></Image>
               )}
             </div>
@@ -188,13 +199,19 @@ const Recipe: NextPage = () => {
           </div>
 
           <div className="group flex flex-col gap-2 py-1 hover:scale-105">
-            <div className="relative aspect-[7/8] h-60 rounded-lg bg-black shadow-md shadow-orange-800/20">
+            <div
+              className={`relative aspect-[7/8] h-60 rounded-lg ${
+                !imageUrl ? "bg-black" : ""
+              } shadow-md shadow-orange-800/20`}
+            >
               {imageUrl && (
                 <Image
                   alt="testing 1"
                   src={imageUrl}
                   fill={true}
                   className="max-w-sm rounded-lg object-cover"
+                  sizes="20vw"
+                  priority={false}
                 ></Image>
               )}
             </div>
@@ -204,13 +221,19 @@ const Recipe: NextPage = () => {
           </div>
 
           <div className="group flex flex-col gap-2 py-1 hover:scale-105">
-            <div className="relative aspect-[7/8] h-60 rounded-lg bg-black shadow-md shadow-orange-800/20">
+            <div
+              className={`relative aspect-[7/8] h-60 rounded-lg ${
+                !imageUrl ? "bg-black" : ""
+              } shadow-md shadow-orange-800/20`}
+            >
               {imageUrl && (
                 <Image
                   alt="testing 1"
                   src={imageUrl}
                   fill={true}
                   className="max-w-sm rounded-lg object-cover"
+                  sizes="20vw"
+                  priority={false}
                 ></Image>
               )}
             </div>
