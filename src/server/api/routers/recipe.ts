@@ -126,4 +126,38 @@ export const recipeRouter = createTRPCRouter({
       },
     };
   }),
+  getSimilarRecipes: publicProcedure.input(z.string()).query(async (opts) => {
+    const instance = Neode.fromEnv().with({
+      Recipe: Recipe,
+    });
+
+    type SimilarReturned = {
+      name: string;
+      imageUrl: string;
+      recipeId: string;
+      n: {
+        low: number;
+      };
+    };
+
+    const retRecipes: Array<SimilarReturned> = (
+      await instance.cypher(
+        "MATCH (r:Recipe {recipeId: $id})-->(:Ingredient)<--(s:Recipe) Return s.name as name, s.imageUrl as imageUrl, s.recipeId as recipeId, count(s) AS n ORDER BY n desc LIMIT 3",
+        { id: opts.input }
+      )
+    ).records.map((rec) => rec.toObject() as SimilarReturned);
+
+    const cleaned = await Promise.all(
+      retRecipes
+        .sort((a, b) => b.n.low - a.n.low)
+        .map(async (rec) => {
+          const url = (await utapi.getFileUrls(rec.imageUrl))[0]?.url || "";
+          return { ...rec, imageUrl: url };
+        })
+    );
+
+    return {
+      result: cleaned,
+    };
+  }),
 });

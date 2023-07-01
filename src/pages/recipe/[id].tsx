@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import Ingredient from "~/components/Ingredient";
 import { api } from "~/utils/api";
+import Link from "next/link";
 
 const Recipe: NextPage = () => {
   const router = useRouter();
@@ -10,6 +11,27 @@ const Recipe: NextPage = () => {
   const recipe = api.recipe.getFullRecipe.useQuery(id).data?.result;
   const userId = recipe?.user as string;
   const user = api.user.getUserDetails.useQuery(userId).data?.result;
+
+  const loadingSimilar = [
+    {
+      recipeId: '0',
+      imageUrl: '/loadingbottle.jpg',
+      name: 'loading..',
+      n: ''
+    },
+    {
+      recipeId: '1',
+      imageUrl: '/loadingbottle.jpg',
+      name: 'loading..',
+      n: ''
+    },
+    {
+      recipeId: '2',
+      imageUrl: '/loadingbottle.jpg',
+      name: 'loading..',
+      n: ''
+    },
+  ]
 
   const loadingDetails = {
     notes: "amaro: an Italian herbal liqueur commonly consumed as a digestif.",
@@ -78,6 +100,8 @@ const Recipe: NextPage = () => {
     ],
   };
 
+  
+  const similar = api.recipe.getSimilarRecipes.useQuery(id).data?.result || loadingSimilar;
   const recipeDetails = recipe?.recipe || loadingDetails;
   const ingredients = recipe?.ingredients || loadingDetails.ingredients;
   const date = recipeDetails?.dateCreated;
@@ -142,11 +166,7 @@ const Recipe: NextPage = () => {
             </div>
           </div>
 
-          <div
-            className={`relative row-span-2 row-start-2 aspect-[7/8] overflow-hidden rounded-xl 2xl:row-span-4 2xl:row-start-3 ${
-              !imageUrl ? "bg-black" : ""
-            } shadow-md shadow-orange-800/20`}
-          >
+          <div className="relative row-span-2 row-start-2 aspect-[7/8] overflow-hidden rounded-xl shadow-md shadow-orange-800/20 2xl:row-span-4 2xl:row-start-3">
             {imageUrl && (
               <Image
                 alt={recipeDetails?.name || ""}
@@ -176,71 +196,30 @@ const Recipe: NextPage = () => {
       <section className="flex w-9/12 flex-shrink flex-col justify-evenly text-center">
         <div className="text-xl 2xl:pb-8 2xl:text-2xl">Similar Recipes</div>
         <div className="flex w-full items-center justify-between">
-          <div className="group flex flex-col gap-2 py-1 hover:scale-105">
+          {similar?.map((rec) => (
             <div
-              className={`relative aspect-[7/8] h-48 rounded-lg  2xl:h-60 ${
-                !imageUrl ? "bg-black" : ""
-              } shadow-md shadow-orange-800/20`}
+              className="group flex flex-col gap-2 py-1 hover:scale-105"
+              key={rec.recipeId}
             >
-              {imageUrl && (
-                <Image
-                  alt="testing 1"
-                  src={imageUrl}
-                  fill={true}
-                  className="max-w-sm rounded-lg object-cover"
-                  sizes="20vw"
-                  priority={false}
-                ></Image>
-              )}
+              <Link href={`/recipe/${rec.recipeId}`}>
+                <div className="relative aspect-[7/8] h-48 rounded-lg  shadow-md shadow-orange-800/20 2xl:h-60">
+                  {rec.imageUrl && (
+                    <Image
+                      alt={rec.name || ''}
+                      src={rec.imageUrl || "/loadingbottle.jpg"}
+                      fill={true}
+                      className="max-w-sm rounded-lg object-cover"
+                      sizes="20vw"
+                      priority={false}
+                    ></Image>
+                  )}
+                </div>
+                <div className="text-violet-950 group-hover:text-orange-700">
+                  {rec.name}
+                </div>
+              </Link>
             </div>
-            <div className="text-violet-950 group-hover:text-orange-700">
-              Testing 1
-            </div>
-          </div>
-
-          <div className="group flex flex-col gap-2 py-1 hover:scale-105">
-            <div
-              className={`relative aspect-[7/8] h-48 rounded-lg  2xl:h-60 ${
-                !imageUrl ? "bg-black" : ""
-              } shadow-md shadow-orange-800/20`}
-            >
-              {imageUrl && (
-                <Image
-                  alt="testing 1"
-                  src={imageUrl}
-                  fill={true}
-                  className="max-w-sm rounded-lg object-cover"
-                  sizes="20vw"
-                  priority={false}
-                ></Image>
-              )}
-            </div>
-            <div className="text-violet-950 group-hover:text-orange-700">
-              Testing 1
-            </div>
-          </div>
-
-          <div className="group flex flex-col gap-2 py-1 hover:scale-105">
-            <div
-              className={`relative aspect-[7/8] h-48 rounded-lg 2xl:h-60 ${
-                !imageUrl ? "bg-black" : ""
-              } shadow-md shadow-orange-800/20`}
-            >
-              {imageUrl && (
-                <Image
-                  alt="testing 1"
-                  src={imageUrl}
-                  fill={true}
-                  className="max-w-sm rounded-lg object-cover"
-                  sizes="20vw"
-                  priority={false}
-                ></Image>
-              )}
-            </div>
-            <div className="text-violet-950 group-hover:text-orange-700">
-              Testing 1
-            </div>
-          </div>
+          ))}
         </div>
       </section>
     </>
