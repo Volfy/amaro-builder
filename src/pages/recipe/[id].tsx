@@ -14,24 +14,24 @@ const Recipe: NextPage = () => {
 
   const loadingSimilar = [
     {
-      recipeId: '0',
-      imageUrl: '/loadingbottle.jpg',
-      name: 'loading..',
-      n: ''
+      recipeId: "0",
+      imageUrl: "/loadingbottle.jpg",
+      name: "loading..",
+      n: "",
     },
     {
-      recipeId: '1',
-      imageUrl: '/loadingbottle.jpg',
-      name: 'loading..',
-      n: ''
+      recipeId: "1",
+      imageUrl: "/loadingbottle.jpg",
+      name: "loading..",
+      n: "",
     },
     {
-      recipeId: '2',
-      imageUrl: '/loadingbottle.jpg',
-      name: 'loading..',
-      n: ''
+      recipeId: "2",
+      imageUrl: "/loadingbottle.jpg",
+      name: "loading..",
+      n: "",
     },
-  ]
+  ];
 
   const loadingDetails = {
     notes: "amaro: an Italian herbal liqueur commonly consumed as a digestif.",
@@ -100,8 +100,8 @@ const Recipe: NextPage = () => {
     ],
   };
 
-  
-  const similar = api.recipe.getSimilarRecipes.useQuery(id).data?.result || loadingSimilar;
+  const similar =
+    api.recipe.getSimilarRecipes.useQuery(id).data?.result || loadingSimilar;
   const recipeDetails = recipe?.recipe || loadingDetails;
   const ingredients = recipe?.ingredients || loadingDetails.ingredients;
   const date = recipeDetails?.dateCreated;
@@ -205,7 +205,7 @@ const Recipe: NextPage = () => {
                 <div className="relative aspect-[7/8] h-48 rounded-lg  shadow-md shadow-orange-800/20 2xl:h-60">
                   {rec.imageUrl && (
                     <Image
-                      alt={rec.name || ''}
+                      alt={rec.name || ""}
                       src={rec.imageUrl || "/loadingbottle.jpg"}
                       fill={true}
                       className="max-w-sm rounded-lg object-cover"
