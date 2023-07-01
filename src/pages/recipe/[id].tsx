@@ -99,7 +99,7 @@ const Recipe: NextPage = () => {
 
         <div className="mb-1 h-0.5 w-full rounded-md bg-orange-600"></div>
 
-        <div className=" grid grid-flow-col-dense auto-rows-min grid-cols-[2fr_2fr_1fr] gap-x-8 gap-y-2 2xl:grid-cols-[6fr_48px_6fr_48px_3fr] 2xl:grid-rows-[1fr_32px_2fr_24px_2fr] 2xl:gap-0">
+        <div className=" grid grid-flow-col auto-rows-min grid-cols-[2fr_2fr_1fr] gap-x-8 gap-y-2 2xl:grid-cols-[6fr_48px_6fr_48px_3fr] 2xl:grid-rows-[1fr_32px_2fr_24px_2fr] 2xl:gap-0">
           <div className="pl-2 text-left text-base italic text-orange-700 2xl:text-lg">
             {recipeDetails?.notes}
           </div>
@@ -143,7 +143,7 @@ const Recipe: NextPage = () => {
           </div>
 
           <div
-            className={`relative row-span-2 row-start-2 aspect-[7/8] overflow-hidden rounded-xl 2xl:row-span-4 ${
+            className={`relative row-span-2 row-start-2 aspect-[7/8] overflow-hidden rounded-xl 2xl:row-span-4 2xl:row-start-3 ${
               !imageUrl ? "bg-black" : ""
             } shadow-md shadow-orange-800/20`}
           >
