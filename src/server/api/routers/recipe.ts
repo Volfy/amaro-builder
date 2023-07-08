@@ -27,6 +27,7 @@ type ProcessedRecipe = {
   defaultVolume: string;
   defaultMeasure: string;
   imageUrl: string;
+  tags: Array<string>;
 };
 
 type ReturnedIngredient = {
@@ -36,23 +37,16 @@ type ReturnedIngredient = {
   shortDesc: string;
   longDesc: string;
   usageNotes: string;
-};
-
-type ReturnedRel = {
-  order: number;
   measure: string;
   unitOfMeasure: string;
-};
-
-type ReturnedUser = {
-  clerkId: string;
+  tags: Array<string>;
 };
 
 type ReturnedFullRecipe = {
-  r: { properties: ReturnedRecipe };
-  rel: { properties: ReturnedRel };
-  i: { properties: ReturnedIngredient };
-  u: { properties: ReturnedUser };
+  recipe: ReturnedRecipe;
+  userId: string;
+  ingredients: Array<ReturnedIngredient>;
+  tags: Array<string>;
 };
 
 const parseDate = (neo4jDateTime: DateTime): Date => {
@@ -94,35 +88,46 @@ export const recipeRouter = createTRPCRouter({
       User: User,
     });
 
-    const retRecipes: Array<ReturnedFullRecipe> = (
+    const retRecipe: ReturnedFullRecipe = (
       await instance.cypher(
-        "MATCH (u:User)-[:AUTHORED]->(r:Recipe {recipeId: $id})-[rel:HAS_INGREDIENT]->(i:Ingredient) RETURN u, r, rel, i",
+        // lmao
+        `MATCH (r:Recipe {recipeId: $id}), 
+        (i:Ingredient), 
+        (u:User), 
+        ()-[rel:HAS_INGREDIENT]-(), 
+        (x:Tag), 
+        (t:Tag)
+    WHERE (r)-[rel]->(i) AND (u)-->(r) AND (i)-->(x) AND (r)-->(t)
+    WITH i {.*, unitOfMeasure: rel.unitOfMeasure, measure: rel.measure, order: rel.order} as ing, 
+        collect(distinct x.name) as tags, u as u, r as r, collect(distinct t.name) as rtags
+    WITH ing {.*, tags} as ingredient, u as u, r as r, rtags as tags
+    ORDER BY ingredient.order
+    RETURN u.clerkId as userId, r {.*} as recipe, collect(distinct ingredient) as ingredients, tags
+        `,
         { id: opts.input }
       )
-    ).records.map((rec) => rec.toObject() as ReturnedFullRecipe);
+    ).records.map((rec) => rec.toObject())[0] as ReturnedFullRecipe;
 
-    const recipeDetails = retRecipes[0]?.r.properties as ReturnedRecipe;
     const processedRecipeDetails = {
-      ...recipeDetails,
-      imageUrl: (await utapi.getFileUrls(recipeDetails.imageUrl))[0]?.url || "",
-      steps: JSON.parse(recipeDetails.steps) as Array<string>,
-      dateCreated: parseDate(recipeDetails.dateCreated),
+      ...retRecipe.recipe,
+      imageUrl:
+        (await utapi.getFileUrls(retRecipe.recipe.imageUrl))[0]?.url || "",
+      steps: JSON.parse(retRecipe.recipe.steps) as Array<string>,
+      dateCreated: parseDate(retRecipe.recipe.dateCreated),
+      tags: retRecipe.tags.slice(0, 12),
     } as ProcessedRecipe;
-    const userId = retRecipes[0]?.u.properties.clerkId as string;
-    const ingredients = retRecipes
-      .map((o) => {
-        return {
-          ...o.i.properties,
-          ...o.rel.properties,
-        };
-      })
-      .sort((a, b) => a.order - b.order);
 
+    const processedIngredientDetails = retRecipe.ingredients.map((i) => {
+      return {
+        ...i,
+        tags: i.tags.slice(0, 6),
+      };
+    });
     return {
       result: {
-        user: userId,
+        userId: retRecipe.userId,
         recipe: processedRecipeDetails,
-        ingredients: ingredients,
+        ingredients: processedIngredientDetails,
       },
     };
   }),
@@ -142,7 +147,7 @@ export const recipeRouter = createTRPCRouter({
 
     const retRecipes: Array<SimilarReturned> = (
       await instance.cypher(
-        "MATCH (r:Recipe {recipeId: $id})-->(:Ingredient)<--(s:Recipe) Return s.name as name, s.imageUrl as imageUrl, s.recipeId as recipeId, count(s) AS n ORDER BY n desc LIMIT 3",
+        `MATCH (r:Recipe {recipeId: $id})--()--(s:Recipe) Return s.name as name, s.imageUrl as imageUrl, s.recipeId as recipeId, count(s) AS n ORDER BY (n + (rand() * 10)) desc LIMIT 3`,
         { id: opts.input }
       )
     ).records.map((rec) => rec.toObject() as SimilarReturned);

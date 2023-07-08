@@ -9,7 +9,7 @@ const Recipe: NextPage = () => {
   const router = useRouter();
   const id = router.query.id as string;
   const recipe = api.recipe.getFullRecipe.useQuery(id).data?.result;
-  const userId = recipe?.user as string;
+  const userId = recipe?.userId as string;
   const user = api.user.getUserDetails.useQuery(userId).data?.result;
 
   const loadingSimilar = [
@@ -41,6 +41,7 @@ const Recipe: NextPage = () => {
     defaultMeasure: "ml",
     name: "Loading Amaro...",
     imageUrl: "/loadingbottle.jpg",
+    tags: ["loading"],
     ingredients: [
       {
         ingredientId: "0",
@@ -51,7 +52,7 @@ const Recipe: NextPage = () => {
         shortDesc: "Lorem ipsum dolor",
         longDesc: "",
         usageNotes: "",
-        order: 0,
+        tags: ["loading"],
       },
       {
         ingredientId: "1",
@@ -62,7 +63,7 @@ const Recipe: NextPage = () => {
         shortDesc: "Lorem ipsum dolor",
         longDesc: "",
         usageNotes: "",
-        order: 0,
+        tags: ["loading"],
       },
       {
         ingredientId: "2",
@@ -73,7 +74,7 @@ const Recipe: NextPage = () => {
         shortDesc: "Lorem ipsum dolor",
         longDesc: "",
         usageNotes: "",
-        order: 0,
+        tags: ["loading"],
       },
       {
         ingredientId: "3",
@@ -84,7 +85,7 @@ const Recipe: NextPage = () => {
         shortDesc: "Lorem ipsum dolor",
         longDesc: "",
         usageNotes: "",
-        order: 0,
+        tags: ["loading"],
       },
       {
         ingredientId: "4",
@@ -95,7 +96,7 @@ const Recipe: NextPage = () => {
         shortDesc: "Lorem ipsum dolor",
         longDesc: "",
         usageNotes: "",
-        order: 0,
+        tags: ["loading"],
       },
     ],
   };
@@ -107,9 +108,7 @@ const Recipe: NextPage = () => {
   const date = recipeDetails?.dateCreated;
   const steps = recipeDetails?.steps;
   const imageUrl = recipeDetails?.imageUrl;
-
-  const tags = ["Herbal", "Smoky", "Bitter", "Vanilla", "Warm"];
-  const itags = ["Bitter", "Herbal", "Warm"];
+  const tags = recipeDetails?.tags;
 
   return (
     <>
@@ -181,7 +180,7 @@ const Recipe: NextPage = () => {
 
           <ul className="col-span-2 col-start-2 row-span-1 row-start-2 grid grid-flow-dense auto-rows-min grid-cols-2 self-start 2xl:col-span-4 2xl:col-start-3 2xl:row-start-3 2xl:mt-6">
             {ingredients.map((i) => (
-              <Ingredient key={i.ingredientId} ingredient={i} itags={itags} />
+              <Ingredient key={i.ingredientId} ingredient={i} />
             ))}
           </ul>
 
