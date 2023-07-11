@@ -18,7 +18,7 @@ const Layout = ({ children }: LayoutProps) => {
       </Head>
 
       <div className="flex min-h-screen w-screen items-center justify-center ">
-        <div className="flex h-fit min-h-screen w-full max-w-fit flex-col items-center justify-between bg-orange-100 bg-[url('/bggrain.png')] shadow-lg shadow-orange-950 2xl:max-w-7xl">
+        <div className="flex h-fit min-h-screen w-full max-w-7xl flex-col items-center justify-between bg-orange-100 bg-[url('/bggrain.png')] shadow-lg shadow-orange-950">
           <header className="mb-4 flex h-min w-full flex-row items-center justify-between gap-4 bg-orange-200 p-4 px-16 text-xl shadow shadow-orange-800/40 2xl:text-2xl">
             <div>
               {!user.isLoaded && user.isSignedIn && (

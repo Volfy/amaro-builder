@@ -110,8 +110,6 @@ export const recipeRouter = createTRPCRouter({
 
     const processedRecipeDetails = {
       ...retRecipe.recipe,
-      imageUrl:
-        (await utapi.getFileUrls(retRecipe.recipe.imageUrl))[0]?.url || "",
       steps: JSON.parse(retRecipe.recipe.steps) as Array<string>,
       dateCreated: parseDate(retRecipe.recipe.dateCreated),
       tags: retRecipe.tags.slice(0, 12),
@@ -152,14 +150,7 @@ export const recipeRouter = createTRPCRouter({
       )
     ).records.map((rec) => rec.toObject() as SimilarReturned);
 
-    const cleaned = await Promise.all(
-      retRecipes
-        .sort((a, b) => b.n.low - a.n.low)
-        .map(async (rec) => {
-          const url = (await utapi.getFileUrls(rec.imageUrl))[0]?.url || "";
-          return { ...rec, imageUrl: url };
-        })
-    );
+    const cleaned = retRecipes.sort((a, b) => b.n.low - a.n.low);
 
     return {
       result: cleaned,

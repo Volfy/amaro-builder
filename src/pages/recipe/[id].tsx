@@ -101,18 +101,28 @@ const Recipe: NextPage = () => {
     ],
   };
 
-  const similar =
+  const recSimilar =
     api.recipe.getSimilarRecipes.useQuery(id).data?.result || loadingSimilar;
+  const similar = recSimilar.map((recipe) => {
+    return {
+      ...recipe,
+      imageUrl:
+        api.ut.getImageUrl.useQuery(recipe.imageUrl).data?.result ||
+        "/loadingbottle.jpg",
+    };
+  });
   const recipeDetails = recipe?.recipe || loadingDetails;
   const ingredients = recipe?.ingredients || loadingDetails.ingredients;
   const date = recipeDetails?.dateCreated;
   const steps = recipeDetails?.steps;
-  const imageUrl = recipeDetails?.imageUrl;
+  const imageUrl =
+    api.ut.getImageUrl.useQuery(recipeDetails?.imageUrl).data?.result ||
+    "/loadingbottle.jpg";
   const tags = recipeDetails?.tags;
 
   return (
     <>
-      <section className="flex w-9/12 flex-col justify-center gap-3">
+      <section className="flex w-9/12 flex-grow flex-col justify-center gap-3">
         <div className="flex justify-between text-xl 2xl:text-2xl">
           <div className="font-medium">{recipeDetails?.name}</div>
           <div>
@@ -127,15 +137,17 @@ const Recipe: NextPage = () => {
             {recipeDetails?.notes}
           </div>
 
-          <div className=" col-start-2 flex h-fit w-fit flex-row flex-wrap justify-center gap-1 justify-self-center 2xl:col-start-3 2xl:w-2/3">
-            {tags.map((tag) => (
-              <div
-                key={tag}
-                className="h-fit w-fit rounded-md bg-rose-950 px-2 py-0.5 text-white shadow-sm shadow-orange-800/50 hover:scale-105"
-              >
-                {tag.toLowerCase()}
-              </div>
-            ))}
+          <div className="col-start-2 mx-4 flex h-fit flex-row flex-wrap justify-center gap-1.5 justify-self-center 2xl:col-start-3">
+            {tags
+              .sort((a, b) => a.length - b.length)
+              .map((tag) => (
+                <span
+                  key={tag}
+                  className="inline-block rounded-md bg-rose-950 px-2 py-0.5 text-white shadow-sm shadow-orange-800/50 hover:scale-105"
+                >
+                  {tag.toLowerCase()}
+                </span>
+              ))}
           </div>
 
           <div className="group col-start-3 flex flex-col self-start justify-self-end rounded-lg bg-orange-200 px-2 py-1 shadow-md shadow-orange-800/20 2xl:col-start-5">
@@ -192,7 +204,7 @@ const Recipe: NextPage = () => {
         </div>
       </section>
 
-      <section className="flex w-9/12 flex-shrink flex-col justify-evenly text-center">
+      <section className="flex w-9/12 flex-shrink flex-grow flex-col justify-evenly text-center">
         <div className="text-xl 2xl:pb-8 2xl:text-2xl">Similar Recipes</div>
         <div className="flex w-full items-center justify-between">
           {similar?.map((rec) => (
