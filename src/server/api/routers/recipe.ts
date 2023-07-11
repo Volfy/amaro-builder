@@ -5,7 +5,6 @@ import Neode from "neode";
 import Ingredient from "~/server/models/Ingredient";
 import User from "~/server/models/User";
 import type { DateTime } from "neo4j-driver";
-import { utapi } from "uploadthing/server";
 
 type ReturnedRecipe = {
   recipeId: string;
