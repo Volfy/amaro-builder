@@ -14,19 +14,19 @@ const Recipe: NextPage = () => {
 
   const loadingSimilar = [
     {
-      recipeId: "0",
+      recipeId: "",
       imageUrl: "/loadingbottle.jpg",
       name: "loading..",
       n: "",
     },
     {
-      recipeId: "1",
+      recipeId: "",
       imageUrl: "/loadingbottle.jpg",
       name: "loading..",
       n: "",
     },
     {
-      recipeId: "2",
+      recipeId: "",
       imageUrl: "/loadingbottle.jpg",
       name: "loading..",
       n: "",
@@ -207,13 +207,16 @@ const Recipe: NextPage = () => {
       <section className="flex w-9/12 flex-shrink flex-grow flex-col justify-evenly text-center">
         <div className="text-xl 2xl:pb-8 2xl:text-2xl">Similar Recipes</div>
         <div className="flex w-full items-center justify-between">
-          {similar?.map((rec) => (
+          {similar?.map((rec, idx) => (
             <div
-              className="group flex flex-col gap-2 py-1 hover:scale-105"
-              key={rec.recipeId}
+              className="group gap-2 py-1 hover:scale-105"
+              key={rec.recipeId || idx}
             >
-              <Link href={`/recipe/${rec.recipeId}`}>
-                <div className="relative aspect-[7/8] h-48 rounded-lg  shadow-md shadow-orange-800/20 2xl:h-60">
+              <Link
+                href={`/recipe/${rec.recipeId || id}`}
+                className="flex flex-col items-center"
+              >
+                <div className="relative aspect-[7/8] h-48 flex-grow-0 rounded-lg shadow-md shadow-orange-800/20 2xl:h-60">
                   {rec.imageUrl && (
                     <Image
                       alt={rec.name || ""}
