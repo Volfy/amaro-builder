@@ -73,7 +73,7 @@ export const recipeRouter = createTRPCRouter({
     const retRecipes = await instance.all("Recipe");
     const recipes = (await retRecipes.toJson()) as Array<ReturnedRecipe>;
     const filteredRecipes = recipes.map((r: ReturnedRecipe) => {
-      return { recipeId: r.recipeId, name: r.name };
+      return { recipeId: r.recipeId, name: r.name, imageUrl: r.imageUrl };
     });
 
     return {

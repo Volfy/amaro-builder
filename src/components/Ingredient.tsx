@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import TagPill from "./TagPill";
 
 type IngredientProps = {
   ingredient: {
@@ -48,12 +49,7 @@ const Ingredient = (props: IngredientProps) => {
             {ingredient.tags
               .sort((a, b) => a.length - b.length)
               .map((tag) => (
-                <span
-                  className="left-0 inline-block rounded bg-rose-950 px-1.5 py-0.5 text-white shadow-sm shadow-orange-800/50"
-                  key={tag}
-                >
-                  {tag.toLowerCase()}
-                </span>
+                <TagPill key={tag} tag={tag} />
               ))}
           </div>
         </div>
